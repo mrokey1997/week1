@@ -1,108 +1,167 @@
 package com.example.mrokey.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class Movie {
-    private int     vote_count;
-    private int     id;
-    private boolean video;
-    private double   vote_average;
-    private String  title;
-    private String  poster_path;
-    private String  original_title;
-    private String  backdrop_path;
-    private String  overview;
-    private String  release_date;
+    @SerializedName("vote_count")
+    @Expose
+    private Integer voteCount;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("video")
+    @Expose
+    private Boolean video;
+    @SerializedName("vote_average")
+    @Expose
+    private Double voteAverage;
+    @SerializedName("title")
+    @Expose
+    private String title;
+    @SerializedName("popularity")
+    @Expose
+    private Double popularity;
+    @SerializedName("poster_path")
+    @Expose
+    private String posterPath;
+    @SerializedName("original_language")
+    @Expose
+    private String originalLanguage;
+    @SerializedName("original_title")
+    @Expose
+    private String originalTitle;
+    @SerializedName("genre_ids")
+    @Expose
+    private List<Integer> genreIds = null;
+    @SerializedName("backdrop_path")
+    @Expose
+    private String backdropPath;
+    @SerializedName("adult")
+    @Expose
+    private Boolean adult;
+    @SerializedName("overview")
+    @Expose
+    private String overview;
+    @SerializedName("release_date")
+    @Expose
+    private String releaseDate;
 
-    public void setVote_count(int vote_count) {
-        this.vote_count = vote_count;
+    public Integer getVoteCount() {
+        return voteCount;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setVoteCount(Integer voteCount) {
+        this.voteCount = voteCount;
     }
 
-    public void setVideo(boolean video) {
-        this.video = video;
-    }
-
-    public void setVote_average(double vote_average) {
-        this.vote_average = vote_average;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setPoster_path(String poster_path) {
-        this.poster_path = poster_path;
-    }
-
-    public void setOriginal_title(String original_title) {
-        this.original_title = original_title;
-    }
-
-    public void setBackdrop_path(String backdrop_path) {
-        this.backdrop_path = backdrop_path;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public void setRelease_date(String release_date) {
-        this.release_date = release_date;
-    }
-
-    public int getVote_count() {
-        return vote_count;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public boolean isVideo() {
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Boolean getVideo() {
         return video;
     }
 
-    public double getVote_average() {
-        return vote_average;
+    public void setVideo(Boolean video) {
+        this.video = video;
+    }
+
+    public Double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(Double voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getPoster_path() {
-        return poster_path;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getOriginal_title() {
-        return original_title;
+    public Double getPopularity() {
+        return popularity;
     }
 
-    public String getBackdrop_path() {
-        return backdrop_path;
+    public void setPopularity(Double popularity) {
+        this.popularity = popularity;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public String getOriginalLanguage() {
+        return originalLanguage;
+    }
+
+    public void setOriginalLanguage(String originalLanguage) {
+        this.originalLanguage = originalLanguage;
+    }
+
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
+    public List<Integer> getGenreIds() {
+        return genreIds;
+    }
+
+    public void setGenreIds(List<Integer> genreIds) {
+        this.genreIds = genreIds;
+    }
+
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
+
+    public Boolean getAdult() {
+        return adult;
+    }
+
+    public void setAdult(Boolean adult) {
+        this.adult = adult;
     }
 
     public String getOverview() {
         return overview;
     }
 
-    public String getRelease_date() {
-        return release_date;
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public Movie() {
-//        this.vote_count = 0;
-//        this.id = 0;
-//        this.video = false;
-//        this.vote_average = 0.0;
-//        this.title = "";
-//        this.poster_path = "";
-//        this.original_title = "";
-//        this.backdrop_path = "";
-//        this.overview = "";
-//        this.release_date = "";
     }
 
     // Test RecyclerView
@@ -112,16 +171,22 @@ public class Movie {
         this.overview = overview;
     }
 
-    public Movie(int vote_count, int id, boolean video, double vote_average, String title, String poster_path, String original_title, String backdrop_path, String overview, String release_date) {
-        this.vote_count = vote_count;
+    public Movie(Integer voteCount, Integer id, Boolean video, Double voteAverage, String title, Double popularity,
+                 String posterPath, String originalLanguage, String originalTitle, List<Integer> genreIds,
+                 String backdropPath, Boolean adult, String overview, String releaseDate) {
+        this.voteCount = voteCount;
         this.id = id;
         this.video = video;
-        this.vote_average = vote_average;
+        this.voteAverage = voteAverage;
         this.title = title;
-        this.poster_path = poster_path;
-        this.original_title = original_title;
-        this.backdrop_path = backdrop_path;
+        this.popularity = popularity;
+        this.posterPath = posterPath;
+        this.originalLanguage = originalLanguage;
+        this.originalTitle = originalTitle;
+        this.genreIds = genreIds;
+        this.backdropPath = backdropPath;
+        this.adult = adult;
         this.overview = overview;
-        this.release_date = release_date;
+        this.releaseDate = releaseDate;
     }
 }

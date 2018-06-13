@@ -12,10 +12,14 @@ import android.widget.Toast;
 
 import com.example.mrokey.model.Movie;
 import com.example.mrokey.model.MovieAdapter;
+import com.example.mrokey.model.NowPlaying;
+import com.example.mrokey.remote.APIUtils;
+import com.example.mrokey.remote.SOService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +32,11 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,36 +44,50 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageView imageView;
 
+    SOService soService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Retrofit
 
-//        imageView = (ImageView) findViewById(R.id.imageView) ;
-//        String imageUri = "https://i.imgur.com/tGbaZCY.jpg";
-//        Picasso.with(MainActivity.this).load()
+        soService = APIUtils.getSOService();
 
-
+        loadMovie();
 
         //initialization
-        list_film = new ArrayList<>();
+//        list_film = new ArrayList<>();
+//
+//        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+//        recyclerView.setHasFixedSize(true);
+//
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+//        recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+    }
 
-        final ReadJSON readJSON = new ReadJSON();
-        runOnUiThread(new Runnable() {
-            public void run() {
-                        readJSON.execute();
+    public void loadMovie() {
+        soService.getMovie().enqueue(new Callback<NowPlaying>() {
+            @Override
+            public void onResponse(Call<NowPlaying> call, Response<NowPlaying> response) {
+                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
+                if (response.isSuccessful()) {
+                    Log.d("MainActivity..", "posts loaded from API");
+                }
+                else {
+                    int statusCode = response.code();
+                    Log.d("MainActivity..", Integer.toString(statusCode));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NowPlaying> call, Throwable t) {
+                Log.d("MainActivity..", "error loading from API");
             }
         });
-
-
-
     }
 
 //    public class ReadJSON extends AsyncTask<Void, Void, Void> {
@@ -100,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
+    //call api here
     public class ReadJSON extends AsyncTask<Void, String, Void> {
         @Override
         protected void onPreExecute() {
@@ -146,28 +170,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String ReadContentFromUrl(String theUrl){
-        StringBuilder content = new StringBuilder();
-        try    {
-            // create a url object
-            URL url = new URL(theUrl);
-            // create a urlconnection object
-            URLConnection urlConnection = url.openConnection();
-
-            // wrap the urlconnection in a bufferedreader
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line;
-
-            // read from the urlconnection via the bufferedreader
-            while ((line = bufferedReader.readLine()) != null) {
-                content.append(line + "\n");
-            }
-            bufferedReader.close();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return content.toString();
-    }
+//    private String ReadContentFromUrl(String theUrl){
+//        StringBuilder content = new StringBuilder();
+//        try    {
+//            // create a url object
+//            URL url = new URL(theUrl);
+//            // create a urlconnection object
+//            URLConnection urlConnection = url.openConnection();
+//
+//            // wrap the urlconnection in a bufferedreader
+//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+//            String line;
+//
+//            // read from the urlconnection via the bufferedreader
+//            while ((line = bufferedReader.readLine()) != null) {
+//                content.append(line + "\n");
+//            }
+//            bufferedReader.close();
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//        return content.toString();
+//    }
 
 //    public void readJSON(String url, String key, String value) {
 //        AsyncHttpClient client = new AsyncHttpClient();
