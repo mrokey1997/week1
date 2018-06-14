@@ -189,4 +189,21 @@ public class Movie {
         this.overview = overview;
         this.releaseDate = releaseDate;
     }
+
+    public Movie(Movie movie) {
+        this.voteCount = movie.voteCount;
+        this.id = movie.id;
+        this.video = movie.video;
+        this.voteAverage = movie.voteAverage;
+        this.title = movie.title;
+        this.popularity = movie.popularity;
+        this.posterPath = movie.posterPath;
+        this.originalLanguage = movie.originalLanguage;
+        this.originalTitle = movie.originalTitle;
+        this.genreIds = movie.genreIds;
+        this.backdropPath = movie.backdropPath;
+        this.adult = movie.adult;
+        this.overview = movie.overview;
+        this.releaseDate = movie.releaseDate;
+    }
 }
