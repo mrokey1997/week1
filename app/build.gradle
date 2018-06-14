@@ -19,21 +19,32 @@ android {
 }
 
 dependencies {
-    //https://guides.codepath.com/android/Using-Android-Async-Http-Client
-    implementation 'com.loopj.android:android-async-http:1.4.9'
-
-    //https://developer.android.com/guide/topics/ui/layout/recyclerview
+    /**
+     * RecyclerView
+     * https://developer.android.com/guide/topics/ui/layout/recyclerview
+     */
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 
-    //https://guides.codepath.com/android/Consuming-APIs-with-Retrofit
+    /**
+     * Retrofit 2
+     * https://guides.codepath.com/android/Consuming-APIs-with-Retrofit
+     */
+    //
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
-    //https://github.com/bumptech/glide
+    /**
+     * Glide
+     * https://github.com/bumptech/glide
+     * https://github.com/wasabeef/glide-transformations
+     */
     implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'jp.wasabeef:glide-transformations:3.3.0'
 
-    //ButterKnife
+    /**
+     * ButterKnife
+     */
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 

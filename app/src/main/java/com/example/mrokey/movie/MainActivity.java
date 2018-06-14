@@ -1,5 +1,6 @@
 package com.example.mrokey.movie;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,8 +27,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debugggg";
 
     List<APIMovie> list_movies;
+
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     MovieAdapter movieAdapter;
 
     @Override
@@ -86,6 +91,21 @@ public class MainActivity extends AppCompatActivity {
         movieAdapter.setData(list_movies);
 
         this.recyclerView.setAdapter(movieAdapter);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                movieAdapter.clearData();
+                getAllMovies();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
     }
 
 }
