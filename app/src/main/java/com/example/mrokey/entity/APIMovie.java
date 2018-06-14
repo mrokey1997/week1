@@ -1,11 +1,12 @@
-package com.example.mrokey.model;
+package com.example.mrokey.entity;
 
+import com.example.mrokey.retrofit.RetrofitClient;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Movie {
+public class APIMovie {
     @SerializedName("vote_count")
     @Expose
     private Integer voteCount;
@@ -161,19 +162,19 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
-    public Movie() {
+    public APIMovie() {
     }
 
     // Test RecyclerView
-    public Movie(int id, String title, String overview) {
+    public APIMovie(int id, String title, String overview) {
         this.id = id;
         this.title = title;
         this.overview = overview;
     }
 
-    public Movie(Integer voteCount, Integer id, Boolean video, Double voteAverage, String title, Double popularity,
-                 String posterPath, String originalLanguage, String originalTitle, List<Integer> genreIds,
-                 String backdropPath, Boolean adult, String overview, String releaseDate) {
+    public APIMovie(Integer voteCount, Integer id, Boolean video, Double voteAverage, String title, Double popularity,
+                    String posterPath, String originalLanguage, String originalTitle, List<Integer> genreIds,
+                    String backdropPath, Boolean adult, String overview, String releaseDate) {
         this.voteCount = voteCount;
         this.id = id;
         this.video = video;
@@ -190,7 +191,7 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
-    public Movie(Movie movie) {
+    public APIMovie(APIMovie movie) {
         this.voteCount = movie.voteCount;
         this.id = movie.id;
         this.video = movie.video;

@@ -1,9 +1,9 @@
-package com.example.mrokey.model;
+package com.example.mrokey.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class Dates {
+class APIDate {
     @SerializedName("maximum")
     @Expose
     private String maximum;

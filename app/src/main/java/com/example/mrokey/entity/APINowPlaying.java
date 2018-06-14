@@ -1,14 +1,14 @@
-package com.example.mrokey.model;
+package com.example.mrokey.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class NowPlaying {
+public class APINowPlaying {
     @SerializedName("results")
     @Expose
-    private List<Movie> movies = null;
+    private List<APIMovie> movies = null;
     @SerializedName("page")
     @Expose
     private Integer page;
@@ -17,16 +17,16 @@ public class NowPlaying {
     private Integer totalResults;
     @SerializedName("dates")
     @Expose
-    private Dates dates;
+    private APIDate dates;
     @SerializedName("total_pages")
     @Expose
     private Integer totalPages;
 
-    public List<Movie> getMovies() {
+    public List<APIMovie> getMovies() {
         return movies;
     }
 
-    public void setResults(List<Movie> results) {
+    public void setResults(List<APIMovie> results) {
         this.movies = results;
     }
 
@@ -46,11 +46,11 @@ public class NowPlaying {
         this.totalResults = totalResults;
     }
 
-    public Dates getDates() {
+    public APIDate getDates() {
         return dates;
     }
 
-    public void setDates(Dates dates) {
+    public void setDates(APIDate dates) {
         this.dates = dates;
     }
 
