@@ -12,16 +12,18 @@ import android.widget.TextView;
 import com.example.mrokey.movie.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
-    ArrayList<Movie> movie;
-    Context context;
+    private ArrayList<Movie> movies;
+    private Context context;
 
-    public MovieAdapter(ArrayList<Movie> movie, Context context) {
-        this.movie = movie;
+    public MovieAdapter(ArrayList<Movie> movies, Context context) {
+        this.movies = movies;
         this.context = context;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
@@ -32,14 +34,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //holder.img_poster.set
-        holder.img_poster.setImageResource(movie.get(position).getId());
-        holder.tv_name.setText(movie.get(position).getTitle());
-        holder.tv_overview.setText(movie.get(position).getOverview());
+        holder.img_poster.setImageResource(movies.get(position).getId());
+        holder.tv_name.setText(movies.get(position).getTitle());
+        holder.tv_overview.setText(movies.get(position).getOverview());
     }
 
     @Override
     public int getItemCount() {
-        return movie.size();
+        return movies.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

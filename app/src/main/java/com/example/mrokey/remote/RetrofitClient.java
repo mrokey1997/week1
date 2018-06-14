@@ -1,23 +1,16 @@
 package com.example.mrokey.remote;
 
-/*
- *
- *
- */
+import com.example.mrokey.model.Movie;
+import com.example.mrokey.model.NowPlaying;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import java.util.List;
 
-public class RetrofitClient {
-    private static Retrofit retrofit = null;
+import retrofit2.Call;
+import retrofit2.http.GET;
 
-    public static Retrofit getClient(String baseUrl) {
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
-        return retrofit;
-    }
+public interface RetrofitClient {
+    @GET("now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")
+    Call<NowPlaying> getMovies();
+
+
 }

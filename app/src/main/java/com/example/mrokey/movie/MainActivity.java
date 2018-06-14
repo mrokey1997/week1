@@ -6,17 +6,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.mrokey.model.Movie;
 import com.example.mrokey.model.MovieAdapter;
 import com.example.mrokey.model.NowPlaying;
-import com.example.mrokey.remote.APIUtils;
-import com.example.mrokey.remote.SOService;
+import com.example.mrokey.remote.RetrofitClient;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -25,11 +22,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import retrofit2.Call;
@@ -39,56 +33,74 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "Debugggg";
+    ArrayList<Movie> arrayList_movies;
 
-    ArrayList<Movie> list_film;
     RecyclerView recyclerView;
     ImageView imageView;
 
-    SOService soService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Retrofit
 
-        soService = APIUtils.getSOService();
-
-        loadMovie();
 
         //initialization
-//        list_film = new ArrayList<>();
+        arrayList_movies = new ArrayList<>();
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+
+
+
+
+        // Retrofit
+
+//        Retrofit.Builder builder = new Retrofit.Builder()
+//                .baseUrl("https://api.themoviedb.org/3/movie/")
+//                .addConverterFactory(GsonConverterFactory.create());
+//        Retrofit retrofit = builder.build();
 //
-//        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-//        recyclerView.setHasFixedSize(true);
+//        RetrofitClient retrofitClient = retrofit.create(RetrofitClient.class);
+//        Call<NowPlaying> call = retrofitClient.getMovies();
+//        call.enqueue(new Callback<NowPlaying>() {
+//            @Override
+//            public void onResponse(Call<NowPlaying> call, Response<NowPlaying> response) {
+//                if (response.isSuccessful()) {
+//                    NowPlaying res = response.body();
+//                    List<Movie> list_movies = res.getMovies();
+//                    for (int i=0; i<list_movies.size(); i++) {
+//                        Movie aFilm = list_movies.get(i);
+//                        list_film.add(new Movie(R.drawable.a, aFilm.getTitle(), aFilm.getOverview()));
+//                    }
+//                }
+//            }
 //
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//        recyclerView.setLayoutManager(layoutManager);
-
-
-    }
-
-    public void loadMovie() {
-        soService.getMovie().enqueue(new Callback<NowPlaying>() {
+//            @Override
+//            public void onFailure(Call<NowPlaying> call, Throwable t) {
+//
+//            }
+//        });
+//
+        runOnUiThread(new Runnable() {
             @Override
-            public void onResponse(Call<NowPlaying> call, Response<NowPlaying> response) {
-                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
-                if (response.isSuccessful()) {
-                    Log.d("MainActivity..", "posts loaded from API");
-                }
-                else {
-                    int statusCode = response.code();
-                    Log.d("MainActivity..", Integer.toString(statusCode));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<NowPlaying> call, Throwable t) {
-                Log.d("MainActivity..", "error loading from API");
+            public void run() {
+                new CallAPI().execute();
             }
         });
+//        new CallAPI().execute();
+//        MovieAdapter movieAdapter = new MovieAdapter(list_film, getApplicationContext());
+//        recyclerView.setAdapter(movieAdapter);
+        Log.d(TAG, "list_movies is null");
     }
+
 
 //    public class ReadJSON extends AsyncTask<Void, Void, Void> {
 //        @Override
@@ -124,39 +136,44 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     //call api here
-    public class ReadJSON extends AsyncTask<Void, String, Void> {
+    public class CallAPI extends AsyncTask<Void, Void, Void> {
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(MainActivity.this, "Downloading JSON...", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Downloading JSON...", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            String url = "https://api.themoviedb.org/3/movie/now_playing";
-            AsyncHttpClient client = new AsyncHttpClient();
-            RequestParams params = new RequestParams();
-            params.put("api_key", "a07e22bc18f5cb106bfe4cc1f83ad8ed");
-//            client.setTimeout(5000);
-            client.get(url, params, new JsonHttpResponseHandler() {
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl("https://api.themoviedb.org/3/movie/")
+                    .addConverterFactory(GsonConverterFactory.create());
+            Retrofit retrofit = builder.build();
+
+            RetrofitClient retrofitClient = retrofit.create(RetrofitClient.class);
+            Call<NowPlaying> call = retrofitClient.getMovies();
+            call.enqueue(new Callback<NowPlaying>() {
                 @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    try {
-                        JSONArray jsonArray = response.getJSONArray("results");
-                        for (int i=0; i<jsonArray.length(); i++) {
-                            JSONObject aFilm = jsonArray.getJSONObject(i);
-                            String title = aFilm.getString("title");
-                            String overview = aFilm.getString("overview");
-                            list_film.add(new Movie(R.drawable.a, title, overview));
+                public void onResponse(Call<NowPlaying> call, Response<NowPlaying> response) {
+                    if (response.isSuccessful()) {
+                        Log.d(TAG, "Retrofit Success");
+                        NowPlaying res = response.body();
+
+                        List<Movie> list_movies = res.getMovies();
+                        for (int i=0; i<list_movies.size(); i++) {
+                            Movie aFilm = list_movies.get(i);
+                            String title = aFilm.getTitle();
+                            String overview = aFilm.getOverview();
+                            arrayList_movies.add(new Movie(R.drawable.a, title, overview));
+                            Log.d(TAG, "Title " + i + ": " + title);
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
                 }
 
                 @Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    Toast.makeText(MainActivity.this, "Read JSON failed.", Toast.LENGTH_LONG).show();
+                public void onFailure(Call<NowPlaying> call, Throwable t) {
+
                 }
             });
             return null;
@@ -165,8 +182,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            MovieAdapter movieAdapter = new MovieAdapter(list_film, getApplicationContext());
+            MovieAdapter movieAdapter = new MovieAdapter(arrayList_movies, getApplicationContext());
             recyclerView.setAdapter(movieAdapter);
+            Toast.makeText(MainActivity.this, "JSON loaded.", Toast.LENGTH_SHORT).show();
         }
     }
 

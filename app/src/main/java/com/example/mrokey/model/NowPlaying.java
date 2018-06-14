@@ -8,7 +8,7 @@ import java.util.List;
 public class NowPlaying {
     @SerializedName("results")
     @Expose
-    private List<Movie> results = null;
+    private List<Movie> movies = null;
     @SerializedName("page")
     @Expose
     private Integer page;
@@ -22,12 +22,12 @@ public class NowPlaying {
     @Expose
     private Integer totalPages;
 
-    public List<Movie> getResults() {
-        return results;
+    public List<Movie> getMovies() {
+        return movies;
     }
 
     public void setResults(List<Movie> results) {
-        this.results = results;
+        this.movies = results;
     }
 
     public Integer getPage() {
