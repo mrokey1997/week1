@@ -89,7 +89,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     /**
      * Create complete path of image
-     * @param path
+     * @param path id of image
      * @return a complete path in string type
      */
     private String createImageURL(String path) {
