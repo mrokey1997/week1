@@ -20,39 +20,36 @@ android {
 
 dependencies {
     /**
-     * RecyclerView
-     * https://developer.android.com/guide/topics/ui/layout/recyclerview
+     *  RecyclerView
+     *  https://developer.android.com/guide/topics/ui/layout/recyclerview
      */
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-
     /**
-     * Retrofit 2
-     * https://guides.codepath.com/android/Consuming-APIs-with-Retrofit
+     *  Retrofit 2
+     *  https://guides.codepath.com/android/Consuming-APIs-with-Retrofit
      */
     //
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-
     /**
-     * Glide
-     * https://github.com/bumptech/glide
-     * https://github.com/wasabeef/glide-transformations
+     *  Glide
+     *  https://github.com/bumptech/glide
+     *  https://github.com/wasabeef/glide-transformations
      */
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
-
     /**
-     * ButterKnife
+     *  ButterKnife
      */
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
 }

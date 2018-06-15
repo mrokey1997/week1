@@ -8,12 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mrokey.entity.APIMovie;
-import com.example.mrokey.movie.MainActivity;
 import com.example.mrokey.movie.R;
 import com.example.mrokey.api.APILink;
 
@@ -24,8 +22,10 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     private List<APIMovie> movies;
     private Context context;
-    private final int POPULAR_MOVIE = 0, REGULAR_MOVIE = 1;
     private ItemClickListener itemClickListener;
+
+    private final int POPULAR_MOVIE = 0, REGULAR_MOVIE = 1;
+
     /**
      * Constructor new a MovieAdapter with Context
      * @param context Context

@@ -1,11 +1,14 @@
 package com.example.mrokey.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class APIMovie {
+public class APIMovie implements Parcelable{
     @SerializedName("vote_count")
     @Expose
     private Integer voteCount;
@@ -164,13 +167,6 @@ public class APIMovie {
     public APIMovie() {
     }
 
-    // Test RecyclerView
-    public APIMovie(int id, String title, String overview) {
-        this.id = id;
-        this.title = title;
-        this.overview = overview;
-    }
-
     public APIMovie(Integer voteCount, Integer id, Boolean video, Double voteAverage, String title, Double popularity,
                     String posterPath, String originalLanguage, String originalTitle, List<Integer> genreIds,
                     String backdropPath, Boolean adult, String overview, String releaseDate) {
@@ -206,4 +202,38 @@ public class APIMovie {
         this.overview = movie.overview;
         this.releaseDate = movie.releaseDate;
     }
+
+    /**
+     * Parcelable
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(voteCount);
+        dest.writeInt(id);
+        dest.writeString(title);
+    }
+
+    public APIMovie(Parcel source) {
+        voteCount = source.readInt();
+        id = source.readInt();
+        title = source.readString();
+    }
+
+    public static final Parcelable.Creator<APIMovie> CREATOR = new Parcelable.Creator<APIMovie>() {
+
+        @Override
+        public APIMovie createFromParcel(Parcel source) {
+            return new APIMovie(source);
+        }
+
+        @Override
+        public APIMovie[] newArray(int size) {
+            return new APIMovie[size];
+        }
+    };
 }

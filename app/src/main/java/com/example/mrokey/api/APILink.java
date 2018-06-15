@@ -1,9 +1,11 @@
 package com.example.mrokey.api;
 
 import com.example.mrokey.entity.APINowPlaying;
+import com.example.mrokey.entity.APITrailer;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface APILink {
@@ -16,4 +18,6 @@ public interface APILink {
 
     @GET("/3/movie/now_playing")
     Call<APINowPlaying> getNowPlaying(@Query("api_key") String values);
+    @GET("3/movie/{id}/trailers")
+    Call<APITrailer> getTrailers(@Path("id") int id, @Query("api_key") String values);
 }

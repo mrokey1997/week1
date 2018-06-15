@@ -1,5 +1,7 @@
 package com.example.mrokey.movie;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,10 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     List<APIMovie> list_movies;
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout swipeRefreshLayout;
 
     MovieAdapter movieAdapter;
 
@@ -64,14 +64,14 @@ public class MainActivity extends AppCompatActivity {
         Call<APINowPlaying> call = retrofitClient.getNowPlaying(APILink.API_KEY);
         call.enqueue(new Callback<APINowPlaying>() {
             @Override
-            public void onResponse(Call<APINowPlaying> call, Response<APINowPlaying> response) {
+            public void onResponse(@NonNull Call<APINowPlaying> call, @NonNull Response<APINowPlaying> response) {
                 if (response.body() != null) {
                     movieAdapter.setData(response.body().getMovies());
                 }
             }
 
             @Override
-            public void onFailure(Call<APINowPlaying> call, Throwable t) {
+            public void onFailure(@NonNull Call<APINowPlaying> call, @NonNull Throwable t) {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
@@ -90,15 +90,24 @@ public class MainActivity extends AppCompatActivity {
 
         movieAdapter = new MovieAdapter(MainActivity.this);
         movieAdapter.setData(list_movies);
+
+        /*
+          Handle what happened when click on item of recycler view
+         */
         movieAdapter.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClickItem(APIMovie movie) {
-                Toast.makeText(MainActivity.this, movie.getTitle(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                intent.putExtra("movie", movie);
+                startActivity(intent);
             }
         });
 
         this.recyclerView.setAdapter(movieAdapter);
 
+        /*
+          set up swipe refresh layout
+         */
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -107,12 +116,10 @@ public class MainActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
     }
 
 }
