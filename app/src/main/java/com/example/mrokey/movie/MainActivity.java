@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.example.mrokey.adapter.ItemClickListener;
 import com.example.mrokey.entity.APIMovie;
 import com.example.mrokey.adapter.MovieAdapter;
 import com.example.mrokey.entity.APINowPlaying;
@@ -89,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
 
         movieAdapter = new MovieAdapter(MainActivity.this);
         movieAdapter.setData(list_movies);
+        movieAdapter.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClickItem(APIMovie movie) {
+                Toast.makeText(MainActivity.this, movie.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         this.recyclerView.setAdapter(movieAdapter);
 

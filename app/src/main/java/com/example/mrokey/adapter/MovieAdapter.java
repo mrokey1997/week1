@@ -3,16 +3,17 @@ package com.example.mrokey.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mrokey.entity.APIMovie;
+import com.example.mrokey.movie.MainActivity;
 import com.example.mrokey.movie.R;
 import com.example.mrokey.api.APILink;
 
@@ -24,7 +25,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     private List<APIMovie> movies;
     private Context context;
     private final int POPULAR_MOVIE = 0, REGULAR_MOVIE = 1;
-
+    private ItemClickListener itemClickListener;
+    /**
+     * Constructor new a MovieAdapter with Context
+     * @param context Context
+     */
     public MovieAdapter(Context context) {
         this.context = context;
     }
@@ -58,6 +63,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
+
+    /**
+     * set listener
+     * @param itemClickListener ItemClickListener
+     */
+    public void setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    /**
+     * Classify item view type
+     * @param position position of movie in movies list
+     * @return type of movie in int type
+     */
     @Override
     public int getItemViewType(int position) {
         if (movies.get(position).getVoteAverage() >= APILink.VOTE_AVERAGE) {
@@ -65,6 +84,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         } else return REGULAR_MOVIE;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
@@ -97,26 +117,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                         .into(holder.img_backdrop);
                 break;
         }
-
     }
 
     @Override
     public int getItemCount() {
         return movies.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_poster;
-        ImageView img_backdrop;
-        TextView tv_title;
-        TextView tv_overview;
-        public ViewHolder(View itemView) {
-            super(itemView);
-            img_poster = (ImageView) itemView.findViewById(R.id.img_poster);
-            img_backdrop = (ImageView) itemView.findViewById(R.id.img_backdrop);
-            tv_title = (TextView) itemView.findViewById(R.id.tv_title);
-            tv_overview = (TextView) itemView.findViewById(R.id.tv_overview);
-        }
     }
 
     /**
@@ -131,6 +136,29 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         builder.append(size);
         builder.append(path);
         return builder.toString();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        ImageView img_poster;
+        ImageView img_backdrop;
+        TextView tv_title;
+        TextView tv_overview;
+
+
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            img_poster = (ImageView) itemView.findViewById(R.id.img_poster);
+            img_backdrop = (ImageView) itemView.findViewById(R.id.img_backdrop);
+            tv_title = (TextView) itemView.findViewById(R.id.tv_title);
+            tv_overview = (TextView) itemView.findViewById(R.id.tv_overview);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onClickItem(movies.get(getAdapterPosition()));
+        }
     }
 
 }
