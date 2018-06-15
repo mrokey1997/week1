@@ -213,15 +213,23 @@ public class APIMovie implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(voteCount);
         dest.writeInt(id);
+        dest.writeDouble(voteAverage);
         dest.writeString(title);
+        dest.writeString(posterPath);
+        dest.writeString(backdropPath);
+        dest.writeString(overview);
+        dest.writeString(releaseDate);
     }
 
     public APIMovie(Parcel source) {
-        voteCount = source.readInt();
         id = source.readInt();
+        voteAverage = source.readDouble();
         title = source.readString();
+        posterPath = source.readString();
+        backdropPath = source.readString();
+        overview = source.readString();
+        releaseDate = source.readString();
     }
 
     public static final Parcelable.Creator<APIMovie> CREATOR = new Parcelable.Creator<APIMovie>() {

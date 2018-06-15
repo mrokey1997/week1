@@ -11,21 +11,30 @@
 
     <TextView
         android:id="@+id/tv_detail_title"
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"/>
-    <TextView
-        android:id="@+id/tv_detail_vote_average"
         android:layout_margin="8dp"
-        android:textSize="15sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:text="@string/title"
+        android:textSize="32sp" />
+
+    <RatingBar
+        android:theme="@style/RatingBar"
+        android:id="@+id/rating_bar"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:rating="1"
+        android:stepSize="0.1"
+        />
+
     <TextView
         android:id="@+id/tv_detail_release_date"
-        android:layout_margin="8dp"
-        android:textSize="15sp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/release_date"
+        android:textSize="15sp" />
 
 </LinearLayout>

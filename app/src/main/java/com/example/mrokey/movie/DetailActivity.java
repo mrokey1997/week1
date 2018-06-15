@@ -2,6 +2,7 @@ package com.example.mrokey.movie;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ public class DetailActivity extends YouTubeBaseActivity {
     @BindView(R.id.youtube_player) YouTubePlayerView youTubePlayerView;
 
     @BindView(R.id.tv_detail_title) TextView tv_detail_title;
-    @BindView(R.id.tv_detail_vote_average) TextView tv_detail_vote_average;
+    @BindView(R.id.rating_bar) RatingBar rating_bar;
     @BindView(R.id.tv_detail_release_date) TextView tv_detail_release_date;
 
     private static final String API_KEY_YOUTUBE = "AIzaSyDMIMloVYigVR8XyAZ5KQKAy7RXleGzNSE";
@@ -52,7 +53,9 @@ public class DetailActivity extends YouTubeBaseActivity {
 
     private void setDetail() {
         tv_detail_title.setText(movie.getTitle());
-        tv_detail_vote_average.setText("Rate: " + movie.getVoteAverage());
+        Double voteAverage = movie.getVoteAverage()/2.0;
+        rating_bar.setRating(voteAverage.floatValue());
+        rating_bar.setIsIndicator(true);
         tv_detail_release_date.setText("Release date: " + movie.getReleaseDate());
     }
 
@@ -61,7 +64,8 @@ public class DetailActivity extends YouTubeBaseActivity {
                 new YouTubePlayer.OnInitializedListener() {
                     @Override
                     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                        youTubePlayer.loadVideo(source);
+                        youTubePlayer.loadVideo(source); // .loadVideo: Play now - .cueVideo: only load
+
                     }
 
                     @Override

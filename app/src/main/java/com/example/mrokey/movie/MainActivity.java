@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<APINowPlaying> call, @NonNull Throwable t) {
-                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                
             }
         });
     }

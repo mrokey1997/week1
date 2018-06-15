@@ -23,7 +23,7 @@ The following **bonus** features are implemented:
 
 * [ ] Allow user to view details of the movie including ratings and popularity within a separate activity or dialog fragment.
 * [x] When viewing a popular movie (i.e. a movie voted for more than 5 stars) the video should show the full backdrop image as the layout.  Uses [Heterogenous RecyclerView](http://guides.codepath.com/android/Heterogenous-Layouts-inside-RecyclerView) to show different layouts.
-* [ ] Allow video trailers to be played in full-screen using the YouTubePlayerView.
+* [x] Allow video trailers to be played in full-screen using the YouTubePlayerView.
     * [ ] Overlay a play icon for videos that can be played.
     * [ ] More popular movies should start a separate activity that plays the video immediately.
     * [ ] Less popular videos rely on the detail page should show ratings and a YouTube preview.
