@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.example.mrokey.entity.APIMovie;
 import com.example.mrokey.adapter.MovieAdapter;
 import com.example.mrokey.entity.APINowPlaying;
-import com.example.mrokey.retrofit.RetrofitClient;
+import com.example.mrokey.api.APILink;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
      */
     void getAllMovies() {
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(RetrofitClient.BASE_URL)
+                .baseUrl(APILink.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
 
-        RetrofitClient retrofitClient = retrofit.create(RetrofitClient.class);
-        Call<APINowPlaying> call = retrofitClient.getNowPlaying(RetrofitClient.API_KEY);
+        APILink retrofitClient = retrofit.create(APILink.class);
+        Call<APINowPlaying> call = retrofitClient.getNowPlaying(APILink.API_KEY);
         call.enqueue(new Callback<APINowPlaying>() {
             @Override
             public void onResponse(Call<APINowPlaying> call, Response<APINowPlaying> response) {

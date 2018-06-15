@@ -1,6 +1,5 @@
 package com.example.mrokey.entity;
 
-import com.example.mrokey.retrofit.RetrofitClient;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
