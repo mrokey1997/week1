@@ -121,7 +121,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                     break;
                 case POPULAR_MOVIE:
                     Glide.with(context).load(movie.getBackdropPath())
-                            .apply(RequestOptions.bitmapTransform(new RoundedCornersTransformation(111, 0, RoundedCornersTransformation.CornerType.ALL)))
+                            .apply(RequestOptions.bitmapTransform(new RoundedCornersTransformation(111, 11, RoundedCornersTransformation.CornerType.ALL)))
                             .into(holder.img_backdrop);
                     break;
             }
@@ -129,7 +129,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             holder.tv_title_land.setText(movie.getTitle());
             holder.tv_overview_land.setText(movie.getOverview());
             Glide.with(context).load(movie.getBackdropPath())
-                    .apply(RequestOptions.bitmapTransform(new RoundedCornersTransformation(111, 0, RoundedCornersTransformation.CornerType.ALL)))
+                    .apply(RequestOptions.bitmapTransform(new RoundedCornersTransformation(111, 11, RoundedCornersTransformation.CornerType.ALL)))
                     .into(holder.img_backdrop_land);
         }
     }
