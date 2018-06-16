@@ -1,8 +1,13 @@
 package com.example.mrokey.movie;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +19,7 @@ import com.example.mrokey.entity.APIMovie;
 import com.example.mrokey.adapter.MovieAdapter;
 import com.example.mrokey.entity.APINowPlaying;
 import com.example.mrokey.api.APILink;
+import com.example.mrokey.features.SomeFeatures;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout swipeRefreshLayout;
 
     MovieAdapter movieAdapter;
+
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<APINowPlaying> call, @NonNull Throwable t) {
-                
+                showAlertDialogNoInternetConnection();
             }
         });
     }
@@ -122,6 +130,31 @@ public class MainActivity extends AppCompatActivity {
                 android.R.color.holo_red_light);
     }
 
+    /**
+     * show a dialog if no internet connection
+     */
+    public void showAlertDialogNoInternetConnection() {
+        if (!SomeFeatures.isInternetConnection(MainActivity.this))
+            alertDialogNoInternetConnection();
+    }
+
+    /**
+     * a dialog: no internet connection
+     */
+    public void alertDialogNoInternetConnection() {
+        builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(getString(R.string.connection_failed));
+        builder.setMessage(getString(R.string.no_internet));
+        builder.setPositiveButton(getString(R.string.try_again), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                init();
+                getAllMovies();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 }
 
 

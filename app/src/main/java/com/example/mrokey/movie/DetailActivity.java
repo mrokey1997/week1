@@ -1,7 +1,9 @@
 package com.example.mrokey.movie;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,6 +12,7 @@ import com.example.mrokey.api.APILink;
 import com.example.mrokey.entity.APIMovie;
 import com.example.mrokey.entity.APITrailer;
 import com.example.mrokey.entity.APIYoutube;
+import com.example.mrokey.features.SomeFeatures;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -48,9 +51,12 @@ public class DetailActivity extends YouTubeBaseActivity {
 
         setDetail();
 
-        getAllTrailers();
+        getTrailer();
     }
 
+    /**
+     * Set up detail information of movie
+     */
     private void setDetail() {
         tv_detail_title.setText(movie.getTitle());
         Double voteAverage = movie.getVoteAverage()/2.0;
@@ -59,6 +65,10 @@ public class DetailActivity extends YouTubeBaseActivity {
         tv_detail_release_date.setText("Release date: " + movie.getReleaseDate());
     }
 
+    /**
+     * set up youtube player
+     * @param source source of video on youtube.com
+     */
     public void youtube(final String source) {
         youTubePlayerView.initialize(API_KEY_YOUTUBE,
                 new YouTubePlayer.OnInitializedListener() {
@@ -75,7 +85,11 @@ public class DetailActivity extends YouTubeBaseActivity {
                 });
     }
 
-    public void getAllTrailers() {
+    /**
+     * call api and shuffle a trailer
+     */
+    public void getTrailer() {
+        showAlertDialogNoInternetConnection();
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(APILink.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create());
@@ -100,4 +114,32 @@ public class DetailActivity extends YouTubeBaseActivity {
             }
         });
     }
+
+    /**
+     * show a dialog if no internet connection
+     */
+    public void showAlertDialogNoInternetConnection() {
+        if (!SomeFeatures.isInternetConnection(DetailActivity.this))
+            alertDialogNoInternetConnection();
+    }
+
+    /**
+     * a dialog: no internet connection
+     */
+    public void alertDialogNoInternetConnection() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
+        builder.setTitle(getString(R.string.connection_failed));
+        builder.setMessage(getString(R.string.no_internet));
+        builder.setPositiveButton(getString(R.string.try_again), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getTrailer();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+
+
 }
