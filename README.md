@@ -3,7 +3,7 @@
 
 WhatMovies shows the latest movies currently playing in theaters. The app utilizes the Movie Database API to display images and basic information about these movies to the user.
 
-Time spent: One week spent in total
+Time spent: 40 hours spent in total
 
 ## User Stories
 
@@ -45,12 +45,13 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+- Time-consuming when called API
+- Not yet fixed error which reload video trailers when switch beetween full screen and normal screen
 
 ## Open-source libraries used
 
-- [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
-- [Picasso](http://square.github.io/picasso/) - Image loading and caching library for Android
+- [Retrofit](http://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java
+- [Glide](https://github.com/bumptech/glide) - A fast and efficient image loading library for Android
 
 ## License
 
