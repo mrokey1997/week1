@@ -23,7 +23,6 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.glide.transformations.CropTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,17 +33,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DetailActivity extends YouTubeBaseActivity {
 
     APIMovie movie;
+
     @BindView(R.id.img_backdrop_detail) ImageView img_backdrop_detail;
 
     @BindView(R.id.img_poster_detail) ImageView img_poster_detail;
 
-    @BindView(R.id.youtube_player) YouTubePlayerView youTubePlayerView;
-
     @BindView(R.id.tv_detail_title) TextView tv_detail_title;
-    @BindView(R.id.rating_bar) RatingBar rating_bar;
     @BindView(R.id.tv_detail_release_date) TextView tv_detail_release_date;
+    @BindView(R.id.rating_bar) RatingBar rating_bar;
 
     @BindView(R.id.tv_overview_detail) TextView tv_overview_detail;
+
+    @BindView(R.id.youtube_player) YouTubePlayerView youTubePlayerView;
 
     private static final String API_KEY_YOUTUBE = "AIzaSyDMIMloVYigVR8XyAZ5KQKAy7RXleGzNSE";
 
@@ -55,10 +55,9 @@ public class DetailActivity extends YouTubeBaseActivity {
 
         ButterKnife.bind(this);
 
-        movie = (APIMovie) getIntent().getParcelableExtra("movie");
+        movie = getIntent().getParcelableExtra("movie");
 
         setDetailInformation();
-
         getTrailer();
     }
 
@@ -66,11 +65,15 @@ public class DetailActivity extends YouTubeBaseActivity {
      * Set up detail information of movie
      */
     private void setDetailInformation() {
-        Glide.with(DetailActivity.this).load(movie.getBackdropPath())
+        Glide.with(DetailActivity.this)
+                .setDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.backdropplaceholder))
+                .load(movie.getBackdropPath())
                 .into(img_backdrop_detail);
         tv_detail_title.setText(movie.getTitle());
 
-        Glide.with(DetailActivity.this).load(movie.getPosterPath())
+        Glide.with(DetailActivity.this)
+                .setDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.posterplaceholder))
+                .load(movie.getPosterPath())
                 .apply(RequestOptions.bitmapTransform(
                         new RoundedCornersTransformation(111, 11, RoundedCornersTransformation.CornerType.ALL)))
                 .into(img_poster_detail);
@@ -91,8 +94,9 @@ public class DetailActivity extends YouTubeBaseActivity {
                 new YouTubePlayer.OnInitializedListener() {
                     @Override
                     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                        youTubePlayer.cueVideo(source); // .loadVideo: Play now - .cueVideo: only load
-
+                        if (movie.getVoteAverage() >= APILink.VOTE_AVERAGE)
+                            youTubePlayer.loadVideo(source); // .loadVideo: Play now - .cueVideo: only load
+                        else youTubePlayer.cueVideo(source);
                     }
 
                     @Override

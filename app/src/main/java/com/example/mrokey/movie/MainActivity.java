@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 showAlertDialogNoInternetConnection();
             }
         });
+
+
     }
 
     /**
