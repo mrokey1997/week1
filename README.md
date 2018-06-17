@@ -45,7 +45,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-- Time-consuming when called API
+- Time-consuming when practiced call API
 - Not yet fixed error which reload video trailers when switch beetween full screen and normal screen
 
 ## Open-source libraries used
