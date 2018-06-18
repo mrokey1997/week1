@@ -32,13 +32,14 @@ The following **bonus** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the app functionality!
+* [x] Display an alert dialog if no internet connection
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/60OZX4y.gifv' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/CgPQSG5.png' title='Detail Information' width='' alt='Detail Information'/>
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
